@@ -1,95 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>3D Object Viewer</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-            transition: background-color 0.8s ease;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IHOLLEE 3D Viewer</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        #viewer-container {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-        }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #ffffff;
+      transition: background-color 0.6s ease-in-out;
+      font-family: sans-serif;
+    }
 
-        model-viewer {
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-        }
+    model-viewer {
+      width: 100vw;
+      height: 100vh;
+      background-color: transparent;
+      opacity: 0;
+      transform: scale(0.98);
+      animation: fadeInZoom 1.2s ease-out forwards;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
 
-        .color-btn-container {
-            position: absolute;
-            top: 50%;
-            left: 40px;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 10;
-        }
+    @keyframes fadeInZoom {
+      0% {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
 
-        .color-btn {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-        }
+    .color-buttons {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+    }
 
-        .color-btn.default { background-color: #ffffff; }
-        .color-btn.gray { background-color: #b3b3b3; }
-        .color-btn.yellow { background-color: #f5cc00; }
-        .color-btn.orange { background-color: #f56d12; }
+    .color-button {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .color-btn:hover { opacity: 0.8; }
-    </style>
+    .color-button:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+    }
 
-    <!-- model-viewer 라이브러리 -->
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    .white { background-color: #ffffff; }
+    .gray { background-color: #b3b3b3; }
+    .yellow { background-color: #f5cc00; }
+    .orange { background-color: #f56d12; }
+  </style>
 </head>
 <body>
-    <div id="viewer-container">
-        <model-viewer id="viewer"
-            src="https://raw.githubusercontent.com/youngsoo-choi-scott/3d-viewer/main/model.glb"
-            alt="3D model"
-            auto-rotate
-            camera-orbit="0deg 75deg 500px"
-            style="width: 100%; height: 100%; background-color: transparent;">
-        </model-viewer>
 
-        <div class="color-btn-container">
-            <div class="color-btn default" onclick="changeBackgroundColor('#ffffff')"></div>
-            <div class="color-btn gray" onclick="changeBackgroundColor('#b3b3b3')"></div>
-            <div class="color-btn yellow" onclick="changeBackgroundColor('#f5cc00')"></div>
-            <div class="color-btn orange" onclick="changeBackgroundColor('#f56d12')"></div>
-        </div>
-    </div>
+  <model-viewer
+    src="model.glb"
+    alt="IHOLLEE 3D Hanger"
+    camera-controls
+    shadow-intensity="1"
+    auto-rotate
+    ar
+    exposure="1.2"
+    style="--poster-color: transparent;"
+  ></model-viewer>
 
-    <script>
-        function changeBackgroundColor(color) {
-            document.body.style.backgroundColor = color;
-        }
+  <div class="color-buttons">
+    <div class="color-button white" onclick="changeBG('#ffffff')"></div>
+    <div class="color-button gray" onclick="changeBG('#b3b3b3')"></div>
+    <div class="color-button yellow" onclick="changeBG('#f5cc00')"></div>
+    <div class="color-button orange" onclick="changeBG('#f56d12')"></div>
+  </div>
 
-        const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12'];
-        let colorIndex = 0;
+  <script>
+    function changeBG(color) {
+      document.body.style.backgroundColor = color;
+    }
+  </script>
 
-        setInterval(() => {
-            changeBackgroundColor(colors[colorIndex]);
-            colorIndex = (colorIndex + 1) % colors.length;
-        }, 3000);
-    </script>
 </body>
 </html>
