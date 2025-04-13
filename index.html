@@ -96,27 +96,35 @@
   </div>
 
   <script>
-    const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12'];
-    let colorIndex = 0;
-    let isManual = false;
+  const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12'];
+  let colorIndex = 0;
+  let autoChange = true;
+  let resumeTimeout;
 
-    function changeBG(color) {
-      document.body.style.backgroundColor = color;
+  function changeBG(color) {
+    document.body.style.backgroundColor = color;
+  }
+
+  function setManualColor(color) {
+    changeBG(color);
+    pauseAutoChange();
+  }
+
+  function pauseAutoChange() {
+    autoChange = false;
+    clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(() => {
+      autoChange = true;
+    }, 3000); // 3초 후 자동 변경 다시 시작
+  }
+
+  setInterval(() => {
+    if (autoChange) {
+      changeBG(colors[colorIndex]);
+      colorIndex = (colorIndex + 1) % colors.length;
     }
-
-    function setManualColor(color) {
-      isManual = true; // Stop auto-rotation on manual change
-      changeBG(color);
-    }
-
-    // Auto background change every 3 seconds (unless user changed it manually)
-    setInterval(() => {
-      if (!isManual) {
-        changeBG(colors[colorIndex]);
-        colorIndex = (colorIndex + 1) % colors.length;
-      }
-    }, 3000);
-  </script>
+  }, 3000);
+</script>
 
 </body>
 </html>
