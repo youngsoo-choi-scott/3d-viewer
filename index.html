@@ -107,6 +107,11 @@
 
   function setManualColor(color) {
     changeBG(color);
+    // 클릭한 색상에 해당하는 인덱스를 colorIndex로 설정
+    const newIndex = colors.indexOf(color);
+    if (newIndex !== -1) {
+      colorIndex = (newIndex + 1) % colors.length; // 다음 순서부터 이어지게
+    }
     pauseAutoChange();
   }
 
@@ -115,7 +120,7 @@
     clearTimeout(resumeTimeout);
     resumeTimeout = setTimeout(() => {
       autoChange = true;
-    }, 3000); // 3초 후 자동 변경 다시 시작
+    }, 10000); // 10초 후 자동 변경 다시 시작
   }
 
   setInterval(() => {
@@ -124,7 +129,33 @@
       colorIndex = (colorIndex + 1) % colors.length;
     }
   }, 3000);
+
+  // 버튼 클릭 시 색상 변경 및 자동 재개 예약
+  document.querySelectorAll('.color-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const color = window.getComputedStyle(button).backgroundColor;
+      // RGB → HEX 변환
+      const hexColor = rgbToHex(color);
+      setManualColor(hexColor);
+    });
+  });
+
+  // RGB 문자열을 HEX 코드로 변환
+  function rgbToHex(rgb) {
+    const result = rgb.match(/\d+/g);
+    if (!result) return '#ffffff';
+    return (
+      '#' +
+      result
+        .map((num) => {
+          const hex = parseInt(num).toString(16);
+          return hex.length === 1 ? '0' + hex : hex;
+        })
+        .join('')
+    );
+  }
 </script>
+
 
 </body>
 </html>
