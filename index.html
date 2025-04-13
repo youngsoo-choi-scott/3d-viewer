@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>3D Object Viewer</title>
     <style>
         body {
@@ -15,6 +15,7 @@
             align-items: center;
             overflow: hidden;
             position: relative;
+            transition: background-color 0.8s ease;
         }
 
         #viewer-container {
@@ -23,14 +24,12 @@
             position: absolute;
         }
 
-        /* 3D object style */
         model-viewer {
             width: 100%;
             height: 100%;
             background-color: transparent;
         }
 
-        /* Color change buttons */
         .color-btn-container {
             position: absolute;
             top: 50%;
@@ -47,42 +46,30 @@
             height: 20px;
             border-radius: 50%;
             border: 1px solid rgba(0, 0, 0, 0.1);
-            opacity: 1;
             cursor: pointer;
         }
 
-        .color-btn.default {
-            background-color: #ffffff;
-        }
+        .color-btn.default { background-color: #ffffff; }
+        .color-btn.gray { background-color: #b3b3b3; }
+        .color-btn.yellow { background-color: #f5cc00; }
+        .color-btn.orange { background-color: #f56d12; }
 
-        .color-btn.gray {
-            background-color: #b3b3b3;
-        }
-
-        .color-btn.yellow {
-            background-color: #f5cc00;
-        }
-
-        .color-btn.orange {
-            background-color: #f56d12;
-        }
-
-        .color-btn:hover {
-            opacity: 0.8;
-        }
+        .color-btn:hover { opacity: 0.8; }
     </style>
+
+    <!-- model-viewer 라이브러리 -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
     <div id="viewer-container">
-        <!-- 3D Model Viewer -->
-        <model-viewer id="viewer" src="https://raw.githubusercontent.com/youngsoo-choi-scott/3d-viewer/main/model.glb"
+        <model-viewer id="viewer"
+            src="https://raw.githubusercontent.com/youngsoo-choi-scott/3d-viewer/main/model.glb"
             alt="3D model"
             auto-rotate
             camera-orbit="0deg 75deg 500px"
             style="width: 100%; height: 100%; background-color: transparent;">
         </model-viewer>
 
-        <!-- Color change buttons -->
         <div class="color-btn-container">
             <div class="color-btn default" onclick="changeBackgroundColor('#ffffff')"></div>
             <div class="color-btn gray" onclick="changeBackgroundColor('#b3b3b3')"></div>
@@ -92,19 +79,17 @@
     </div>
 
     <script>
-        // Function to change background color
         function changeBackgroundColor(color) {
             document.body.style.backgroundColor = color;
         }
 
-        // Function to automatically change background color every 3 seconds
-        const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12']; // Predefined colors
+        const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12'];
         let colorIndex = 0;
 
         setInterval(() => {
             changeBackgroundColor(colors[colorIndex]);
-            colorIndex = (colorIndex + 1) % colors.length; // Cycle through the colors
-        }, 3000); // Change every 3 seconds
+            colorIndex = (colorIndex + 1) % colors.length;
+        }, 3000);
     </script>
 </body>
 </html>
