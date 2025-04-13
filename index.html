@@ -89,16 +89,33 @@
   ></model-viewer>
 
   <div class="color-buttons">
-    <div class="color-button white" onclick="changeBG('#ffffff')"></div>
-    <div class="color-button gray" onclick="changeBG('#b3b3b3')"></div>
-    <div class="color-button yellow" onclick="changeBG('#f5cc00')"></div>
-    <div class="color-button orange" onclick="changeBG('#f56d12')"></div>
+    <div class="color-button white" onclick="setManualColor('#ffffff')"></div>
+    <div class="color-button gray" onclick="setManualColor('#b3b3b3')"></div>
+    <div class="color-button yellow" onclick="setManualColor('#f5cc00')"></div>
+    <div class="color-button orange" onclick="setManualColor('#f56d12')"></div>
   </div>
 
   <script>
+    const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12'];
+    let colorIndex = 0;
+    let isManual = false;
+
     function changeBG(color) {
       document.body.style.backgroundColor = color;
     }
+
+    function setManualColor(color) {
+      isManual = true; // Stop auto-rotation on manual change
+      changeBG(color);
+    }
+
+    // Auto background change every 3 seconds (unless user changed it manually)
+    setInterval(() => {
+      if (!isManual) {
+        changeBG(colors[colorIndex]);
+        colorIndex = (colorIndex + 1) % colors.length;
+      }
+    }, 3000);
   </script>
 
 </body>
