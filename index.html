@@ -2,78 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ihollee 3D Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IHOLLEE 3D Viewer</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     body {
       margin: 0;
       background-color: #ffffff;
+      transition: background-color 0.6s ease-in-out;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      transition: background-color 0.3s ease;
+      font-family: sans-serif;
     }
 
     model-viewer {
-      width: 100%;
-      height: 80vh;
-      max-width: 800px;
+      width: 500px;
+      height: 500px;
+      background-color: transparent;
+      opacity: 0;
+      transform: scale(0.95);
+      animation: fadeInZoom 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeInZoom {
+      0% {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .color-buttons {
       display: flex;
       gap: 12px;
-      margin-top: 20px;
+      margin-top: 24px;
     }
 
     .color-button {
       width: 20px;
       height: 20px;
       border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.1);
       cursor: pointer;
-      border: none;
-      outline: none;
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .color-button:hover {
       transform: scale(1.2);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
     }
 
-    .white { background-color: #ffffff; border: 1px solid #ccc; }
-    .gray  { background-color: #b3b3b3; }
+    .white { background-color: #ffffff; }
+    .gray { background-color: #b3b3b3; }
     .yellow { background-color: #f5cc00; }
     .orange { background-color: #f56d12; }
   </style>
 </head>
 <body>
+
   <model-viewer
     src="model.glb"
-    alt="ihollee hanger"
+    alt="IHOLLEE 3D Hanger"
     camera-controls
-    auto-rotate
-    autoplay
     shadow-intensity="1"
-    shadow-softness="1"
-    environment-image="neutral"
-    exposure="1"
-    scale="1.5 1.5 1.5"
+    auto-rotate
+    ar
+    exposure="1.2"
+    style="--poster-color: transparent;"
   ></model-viewer>
 
   <div class="color-buttons">
-    <button class="color-button white" onclick="changeBg('#ffffff')"></button>
-    <button class="color-button gray" onclick="changeBg('#b3b3b3')"></button>
-    <button class="color-button yellow" onclick="changeBg('#f5cc00')"></button>
-    <button class="color-button orange" onclick="changeBg('#f56d12')"></button>
+    <div class="color-button white" onclick="changeBG('#ffffff')"></div>
+    <div class="color-button gray" onclick="changeBG('#b3b3b3')"></div>
+    <div class="color-button yellow" onclick="changeBG('#f5cc00')"></div>
+    <div class="color-button orange" onclick="changeBG('#f56d12')"></div>
   </div>
 
   <script>
-    function changeBg(color) {
+    function changeBG(color) {
       document.body.style.backgroundColor = color;
     }
   </script>
+
 </body>
 </html>
