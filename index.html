@@ -1,134 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IHOLLEE 3D Viewer</title>
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+<script>
+  const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12'];
+  let colorIndex = 0;
+  let autoChange = true;
+  let resumeTimeout;
+
+  function changeBG(color) {
+    document.body.style.backgroundColor = color;
+  }
+
+  function setManualColor(color) {
+    changeBG(color);
+    // 클릭한 색상에 해당하는 인덱스를 colorIndex로 설정
+    const newIndex = colors.indexOf(color);
+    if (newIndex !== -1) {
+      colorIndex = (newIndex + 1) % colors.length; // 다음 순서부터 이어지게
     }
+    pauseAutoChange();
+  }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #ffffff;
-      font-family: sans-serif;
+  function pauseAutoChange() {
+    autoChange = false;
+    clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(() => {
+      autoChange = true;
+    }, 10000); // 10초 후 자동 변경 다시 시작
+  }
+
+  setInterval(() => {
+    if (autoChange) {
+      changeBG(colors[colorIndex]);
+      colorIndex = (colorIndex + 1) % colors.length;
     }
+  }, 3000);
 
-    model-viewer {
-      width: 100vw;
-      height: 100vh;
-      background-color: transparent;
-      opacity: 1;
-      transform: scale(1);
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1; /* 모델이 로고보다 위에 오도록 설정 */
-    }
+  // 버튼 클릭 시 색상 변경 및 자동 재개 예약
+  document.querySelectorAll('.color-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const color = window.getComputedStyle(button).backgroundColor;
+      // RGB → HEX 변환
+      const hexColor = rgbToHex(color);
+      setManualColor(hexColor);
+    });
+  });
 
-    .color-buttons {
-      position: absolute;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 12px;
-      z-index: 2; /* 색상 버튼은 모델과 로고보다 위에 위치 */
-    }
-
-    .color-button {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .color-button:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
-    }
-
-    .white { background-color: #ffffff; }
-    .gray { background-color: #b3b3b3; }
-    .yellow { background-color: #f5cc00; }
-    .orange { background-color: #f56d12; }
-
-    #logo-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: calc(100% - 80px); /* 좌우 마진 40px씩 적용 */
-      height: 100%;
-      z-index: 0; /* 3D 모델 뒤에 위치하도록 설정 */
-      overflow: hidden; /* 로고 잘리지 않게 처리 */
-    }
-
-    #logo-container svg {
-      width: 100%;
-      height: 100%;
-      fill: #6c6400; /* 로고 단색으로 설정 */
-      object-fit: contain; /* SVG 내용이 비율을 유지하며 꽉 차도록 조정 */
-    }
-  </style>
-</head>
-<body>
-
-  <!-- 3D 모델 뷰어 -->
-  <model-viewer
-    src="model.glb"
-    alt="IHOLLEE 3D Hanger"
-    camera-controls
-    shadow-intensity="1"
-    auto-rotate
-    ar
-    exposure="1.2">
-  </model-viewer>
-
-  <!-- SVG 로고 삽입 -->
-  <div id="logo-container">
-    <!-- 실제 로고 SVG 내용으로 교체 -->
-    <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448.97 124.72">
-      <defs>
-        <style>
-          .cls-1 {
-            fill: #6c6400;
-            stroke-width: 0px;
-          }
-        </style>
-      </defs>
-      <g id="_레이어_1" data-name="레이어 1">
-        <g>
-          <path class="cls-1" d="M164.62,34.93c-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9,44.9-20.1,44.9-44.9-20.1-44.9-44.9-44.9M164.62,114.75c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92,34.92,15.63,34.92,34.92-15.63,34.92-34.92,34.92"/>
-          <path class="cls-1" d="M4.99,0C2.23,0,0,2.24,0,5v14.97h9.98V5C9.98,2.24,7.74,0,4.99,0"/>
-          <path class="cls-1" d="M249.43,5c0-2.75-2.23-4.98-4.98-4.98s-4.98,2.23-4.98,4.98h0v109.75h0c0,2.75,2.23,4.98,4.98,4.98s4.98-2.23,4.98-4.98V5Z"/>
-          <path class="cls-1" d="M349.2,84.81v-4.99c0-1.69-.1-3.35-.28-4.99-2.48-22.45-21.51-39.91-44.61-39.91-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9c1.05,0,2.08-.05,3.11-.12h0c2.75,0,4.98-2.24,4.98-4.99s-2.23-5.01-4.98-5.01c-1.03.09-2.06.15-3.11.15h0c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92c17.59,0,32.1,13.02,34.52,29.93h-36.54s0,.01,0,.01c-2.75,0-4.98,2.23-4.98,4.98s2.23,4.98,4.98,4.98c0,0,0,0,0,0h0s46.91,0,46.91,0Z"/>
-          <path class="cls-1" d="M448.97,84.81v-4.99c0-1.69-.1-3.35-.28-4.99-2.48-22.45-21.51-39.91-44.61-39.91-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9c1.05,0,2.08-.05,3.11-.12h0c2.75,0,4.98-2.24,4.98-4.99s-2.23-5.01-4.98-5.01c-1.03.09-2.06.15-3.11.15h0c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92c17.59,0,32.1,13.02,34.52,29.93h-36.54s0,.01,0,.01c-2.75,0-4.98,2.23-4.98,4.98s2.23,4.98,4.98,4.98c0,0,0,0,0,0h0s46.91,0,46.91,0Z"/>
-        </g>
-      </g>
-    </svg>
-  </div>
-
-  <!-- 색상 선택 버튼 -->
-  <div class="color-buttons">
-    <div class="color-button white" onclick="setManualColor('#ffffff')"></div>
-    <div class="color-button gray" onclick="setManualColor('#b3b3b3')"></div>
-    <div class="color-button yellow" onclick="setManualColor('#f5cc00')"></div>
-    <div class="color-button orange" onclick="setManualColor('#f56d12')"></div>
-  </div>
-
-  <script>
-    function setManualColor(color) {
-      document.querySelector('model-viewer').style.backgroundColor = color;
-    }
-  </script>
-</body>
-</html>
+  // RGB 문자열을 HEX 코드로 변환
+  function rgbToHex(rgb) {
+    const result = rgb.match(/\d+/g);
+    if (!result) return '#ffffff';
+    return (
+      '#' +
+      result
+        .map((num) => {
+          const hex = parseInt(num).toString(16);
+          return hex.length === 1 ? '0' + hex : hex;
+        })
+        .join('')
+    );
+  }
+</script>
