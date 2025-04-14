@@ -120,7 +120,7 @@
   </div>
 
   <div class="logo-bg">
-    <!-- 로고 SVG 시작 -->
+    <!-- 로고 SVG 삽입 부분 -->
     <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448.97 124.72">
       <defs>
         <style>
@@ -142,8 +142,7 @@
           <path class="cls-1" d="M109.75,79.83c0-24.8-20.1-44.9-44.9-44.9-14.11,0-26.69,6.51-34.92,16.69V5h0s0,0,0,0c0-2.76-2.23-4.99-4.99-4.99s-4.99,2.23-4.99,4.99c0,0,0,0,0,0h0v109.75h0s0,0,0,.01c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99c0,0,0-.01,0-.02v-34.92c0-19.29,15.63-34.92,34.92-34.92s34.92,15.63,34.92,34.92v34.92h0s0,.01,0,.02c0,2.75,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99c0,0,0-.01,0-.02h0v-34.92Z"/>
         </g>
       </g>
-  </svg>
-    <!-- 로고 SVG 끝 -->
+    </svg>
   </div>
 
   <script>
@@ -151,13 +150,10 @@
 
     colorButtons.forEach(button => {
       button.addEventListener('click', () => {
-        const bgColor = button.getAttribute('data-color');
-        const logoColor = button.getAttribute('data-logocolor');
+        const bgColor = button.dataset.color;
+        const logoColor = button.dataset.logocolor;
 
-        // 배경색 변경
         document.body.style.backgroundColor = bgColor;
-
-        // 로고 색상 변경
         document.documentElement.style.setProperty('--logo-color', logoColor);
       });
     });
