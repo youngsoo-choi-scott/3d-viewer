@@ -100,6 +100,17 @@
 </head>
 <body>
 
+  <model-viewer
+    src="model.glb"
+    alt="IHOLLEE 3D Hanger"
+    camera-controls
+    shadow-intensity="1"
+    auto-rotate
+    ar
+    exposure="1.2"
+    style="--poster-color: transparent;"
+  ></model-viewer>
+
   <div class="logo-bg">
     <!-- 임시 SVG: 실제 로고로 대체해주세요 -->
     <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448.97 124.72">
@@ -125,17 +136,6 @@
       </g>
   </svg>
   </div>
-
-  <model-viewer
-    src="model.glb"
-    alt="IHOLLEE 3D Hanger"
-    camera-controls
-    shadow-intensity="1"
-    auto-rotate
-    ar
-    exposure="1.2"
-    style="--poster-color: transparent;"
-  ></model-viewer>
 
   <div class="color-buttons">
     <div class="color-button white" onclick="setManualColor('#ffffff')"></div>
