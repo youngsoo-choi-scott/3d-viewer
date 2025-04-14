@@ -139,7 +139,7 @@
           <path class="cls-1" d="M448.97,84.81v-4.99c0-1.69-.1-3.35-.28-4.99-2.48-22.45-21.51-39.91-44.61-39.91-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9c1.05,0,2.08-.05,3.11-.12h0c2.75,0,4.98-2.24,4.98-4.99s-2.23-5.01-4.98-5.01c-1.03.09-2.06.15-3.11.15h0c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92c17.59,0,32.1,13.02,34.52,29.93h-36.54s0,.01,0,.01c-2.75,0-4.98,2.23-4.98,4.98s2.23,4.98,4.98,4.98c0,0,0,0,0,0h0s46.91,0,46.91,0Z"/>
           <path class="cls-1" d="M224.49.02c-2.75,0-4.98,2.23-4.98,4.98h-.01v109.75c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99V5c0-2.75-2.23-4.98-4.98-4.98"/>
           <path class="cls-1" d="M0,24.95v89.79c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99V24.95H0Z"/>
-          <path class="cls-1" d="M109.75,79.83c0-24.8-20.1-44.9-44.9-44.9-14.11,0-26.69,6.51-34.92,16.69V5h0s0,0,0,0c0-2.76-2.23-4.99-4.99-4.99s-4.99,2.23-4.99,4.99c0,0,0,0,0,0h0v109.75h0s0,0,0,.01c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99c0,0,0-.01,0-.02v-34.92c0-19.29,15.63-34.92,34.92-34.92s34.92,15.63,34.92,34.92v34.92h0s0,.01,0,.02c0,2.75,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99c0,0,0-.01,0-.02h0v-34.92Z"/>
+          <path class="cls-1" d="M109.75,79.83c0-24.8-20.1-44.9-44.9-44.9-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9,44.9-20.1,44.9-44.9"/>
         </g>
       </g>
     </svg>
@@ -147,17 +147,29 @@
 
   <script>
     const colorButtons = document.querySelectorAll('.color-button');
+    const logoSvg = document.querySelector('.logo-bg svg');
+    const body = document.body;
 
-    colorButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const bgColor = button.dataset.color;
-        const logoColor = button.dataset.logocolor;
+    // 배경 색상 및 로고 색상 변경 함수
+    function changeBackgroundColor(color, logoColor) {
+      body.style.backgroundColor = color;
+      logoSvg.style.color = logoColor;
+    }
 
-        document.body.style.backgroundColor = bgColor;
-        document.documentElement.style.setProperty('--logo-color', logoColor);
-      });
-    });
+    // 배경 색상 변경 (주기적으로)
+    const colors = [
+      { background: '#ffffff', logo: '#6C6500' },
+      { background: '#b3b3b3', logo: '#222222' },
+      { background: '#f5cc00', logo: '#ffffff' },
+      { background: '#f56d12', logo: '#f5cc00' }
+    ];
+
+    let currentColorIndex = 0;
+
+    setInterval(() => {
+      changeBackgroundColor(colors[currentColorIndex].background, colors[currentColorIndex].logo);
+      currentColorIndex = (currentColorIndex + 1) % colors.length;
+    }, 2500); // 2.5초마다 색상 변경
   </script>
-
 </body>
 </html>
