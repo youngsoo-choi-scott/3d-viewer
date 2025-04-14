@@ -184,9 +184,13 @@
       // 클릭한 버튼에 맞는 색상 인덱스 찾기
       const color = event.target.dataset.color;
       const logoColor = event.target.dataset.logocolor;
-      
+
       // 색상 변경
       changeBackgroundColor(color, logoColor);
+
+      // 버튼 클릭 후, 자동 변경을 다시 시작하며 색상 인덱스를 해당 버튼 클릭 색상으로 설정
+      const clickedColorIndex = colors.findIndex(c => c.background === color);
+      currentColorIndex = clickedColorIndex; // 클릭한 버튼의 색상 인덱스로 설정
 
       // 자동 변경 타이머 리셋 및 재시작
       clearInterval(autoChangeTimer); // 기존 타이머 초기화
@@ -197,8 +201,6 @@
   // 페이지 로드 시 자동 색상 변경 시작
   startAutoColorChange();
 </script>
-
-
 
 </body>
 </html>
