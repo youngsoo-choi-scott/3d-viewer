@@ -21,6 +21,10 @@
       font-family: sans-serif;
     }
 
+    :root {
+      --logo-color: #111111; /* 초기 텍스트 색상 */
+    }
+
     model-viewer {
       width: 100vw;
       height: 100vh;
@@ -49,9 +53,9 @@
       position: absolute;
       left: 40px;
       bottom: 50%;
-      transform: translateY(50%); /* 가운데 정렬 */
+      transform: translateY(50%);
       display: flex;
-      flex-direction: column; /* 가로 → 세로로 변경 */
+      flex-direction: column;
       gap: 12px;
       z-index: 10;
     }
@@ -74,9 +78,34 @@
     .gray { background-color: #b3b3b3; }
     .yellow { background-color: #f5cc00; }
     .orange { background-color: #f56d12; }
+
+    .logo-bg {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      padding: 0 40px;
+      z-index: -1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .logo-bg svg {
+      width: 100%;
+      height: auto;
+      color: var(--logo-color);
+    }
   </style>
 </head>
 <body>
+
+  <div class="logo-bg">
+    <!-- 임시 SVG: 실제 로고로 대체해주세요 -->
+    <svg viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <text x="0" y="35" font-size="40" fill="currentColor" font-family="sans-serif">IHOLLEE</text>
+    </svg>
+  </div>
 
   <model-viewer
     src="model.glb"
@@ -96,66 +125,71 @@
     <div class="color-button orange" onclick="setManualColor('#f56d12')"></div>
   </div>
 
- <script>
-  const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12'];
-  let colorIndex = 0;
-  let autoChange = true;
-  let resumeTimeout;
+  <script>
+    const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12'];
+    let colorIndex = 0;
+    let autoChange = true;
+    let resumeTimeout;
 
-  function changeBG(color) {
-    document.body.style.backgroundColor = color;
-  }
-
-  function setManualColor(color) {
-    changeBG(color);
-    // 클릭한 색상에 해당하는 인덱스를 colorIndex로 설정
-    const newIndex = colors.indexOf(color);
-    if (newIndex !== -1) {
-      colorIndex = (newIndex + 1) % colors.length; // 다음 순서부터 이어지게
+    function changeBG(color) {
+      document.body.style.backgroundColor = color;
+      document.documentElement.style.setProperty('--logo-color', getContrastColor(color));
     }
-    pauseAutoChange();
-  }
 
-  function pauseAutoChange() {
-    autoChange = false;
-    clearTimeout(resumeTimeout);
-    resumeTimeout = setTimeout(() => {
-      autoChange = true;
-    }, 3000); // 3초 후 자동 변경 다시 시작
-  }
-
-  setInterval(() => {
-    if (autoChange) {
-      changeBG(colors[colorIndex]);
-      colorIndex = (colorIndex + 1) % colors.length;
+    function setManualColor(color) {
+      changeBG(color);
+      const newIndex = colors.indexOf(color);
+      if (newIndex !== -1) {
+        colorIndex = (newIndex + 1) % colors.length;
+      }
+      pauseAutoChange();
     }
-  }, 3000);
 
-  // 버튼 클릭 시 색상 변경 및 자동 재개 예약
-  document.querySelectorAll('.color-button').forEach((button) => {
-    button.addEventListener('click', () => {
-      const color = window.getComputedStyle(button).backgroundColor;
-      // RGB → HEX 변환
-      const hexColor = rgbToHex(color);
-      setManualColor(hexColor);
+    function pauseAutoChange() {
+      autoChange = false;
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        autoChange = true;
+      }, 3000);
+    }
+
+    setInterval(() => {
+      if (autoChange) {
+        changeBG(colors[colorIndex]);
+        colorIndex = (colorIndex + 1) % colors.length;
+      }
+    }, 3000);
+
+    document.querySelectorAll('.color-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const color = window.getComputedStyle(button).backgroundColor;
+        const hexColor = rgbToHex(color);
+        setManualColor(hexColor);
+      });
     });
-  });
 
-  // RGB 문자열을 HEX 코드로 변환
-  function rgbToHex(rgb) {
-    const result = rgb.match(/\d+/g);
-    if (!result) return '#ffffff';
-    return (
-      '#' +
-      result
-        .map((num) => {
-          const hex = parseInt(num).toString(16);
-          return hex.length === 1 ? '0' + hex : hex;
-        })
-        .join('')
-    );
-  }
-</script>
+    function rgbToHex(rgb) {
+      const result = rgb.match(/\d+/g);
+      if (!result) return '#ffffff';
+      return (
+        '#' +
+        result
+          .map((num) => {
+            const hex = parseInt(num).toString(16);
+            return hex.length === 1 ? '0' + hex : hex;
+          })
+          .join('')
+      );
+    }
+
+    function getContrastColor(hex) {
+      const r = parseInt(hex.substr(1, 2), 16);
+      const g = parseInt(hex.substr(3, 2), 16);
+      const b = parseInt(hex.substr(5, 2), 16);
+      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      return brightness > 128 ? '#111111' : '#ffffff';
+    }
+  </script>
 
 </body>
 </html>
