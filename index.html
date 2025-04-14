@@ -180,13 +180,13 @@
 
   // 버튼 클릭 시 색상 변경
   colorButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      // 현재 인덱스에 맞는 색상으로 변경
-      const newColor = colors[currentColorIndex].background;
-      const newLogoColor = colors[currentColorIndex].logo;
+    button.addEventListener('click', (event) => {
+      // 클릭한 버튼에 맞는 색상 인덱스 찾기
+      const color = event.target.dataset.color;
+      const logoColor = event.target.dataset.logocolor;
       
       // 색상 변경
-      changeBackgroundColor(newColor, newLogoColor);
+      changeBackgroundColor(color, logoColor);
 
       // 자동 변경 타이머 리셋 및 재시작
       clearInterval(autoChangeTimer); // 기존 타이머 초기화
@@ -197,6 +197,7 @@
   // 페이지 로드 시 자동 색상 변경 시작
   startAutoColorChange();
 </script>
+
 
 
 </body>
