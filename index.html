@@ -151,6 +151,7 @@
   const body = document.body;
   
   let autoChangeTimer; // 타이머를 저장할 변수
+  let currentColorIndex = 0; // 자동 변경 색상의 인덱스를 추적하는 변수
   
   // 배경 색상 및 로고 색상 변경 함수
   function changeBackgroundColor(color, logoColor) {
@@ -166,12 +167,13 @@
     { background: '#f56d12', logo: '#f5cc00' }
   ];
   
-  let currentColorIndex = 0;
-  
   // 자동 색상 변경 함수
   function startAutoColorChange() {
     autoChangeTimer = setInterval(() => {
+      // 현재 색상 인덱스에 맞게 색상 변경
       changeBackgroundColor(colors[currentColorIndex].background, colors[currentColorIndex].logo);
+      
+      // 인덱스 순차적으로 증가
       currentColorIndex = (currentColorIndex + 1) % colors.length;
     }, 3000); // 3초마다 색상 변경
   }
@@ -179,8 +181,9 @@
   // 버튼 클릭 시 색상 변경
   colorButtons.forEach(button => {
     button.addEventListener('click', () => {
-      const newColor = button.getAttribute('data-color');
-      const newLogoColor = button.getAttribute('data-logocolor');
+      // 현재 인덱스에 맞는 색상으로 변경
+      const newColor = colors[currentColorIndex].background;
+      const newLogoColor = colors[currentColorIndex].logo;
       
       // 색상 변경
       changeBackgroundColor(newColor, newLogoColor);
@@ -193,6 +196,7 @@
   
   // 페이지 로드 시 자동 색상 변경 시작
   startAutoColorChange();
+
 </script>
 
 </body>
