@@ -111,6 +111,7 @@
     auto-rotate
     ar
     exposure="1.2"
+    scale="3, 3, 3"
     style="--poster-color: transparent; width: 100%; height: 100%;"
   ></model-viewer>
 
@@ -151,13 +152,6 @@
   const colorButtons = document.querySelectorAll('.color-button');
   const logoSvg = document.querySelector('.logo-bg svg');
   const body = document.body;
-
-  // 모델 크기 동적으로 조정
-  const modelViewer = document.getElementById('myModel');
-  modelViewer.addEventListener('load', function() {
-    // 모델이 로드된 후 크기 조정
-    modelViewer.setAttribute('scale', '2.5 2.5 2.5'); // 원하는 크기로 설정
-  });
 
   let autoChangeTimer; // 타이머를 저장할 변수
   let currentColorIndex = 0; // 자동 변경 색상의 인덱스를 추적하는 변수
