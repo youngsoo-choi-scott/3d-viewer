@@ -146,30 +146,58 @@
   </div>
 
   <script>
-    const colorButtons = document.querySelectorAll('.color-button');
-    const logoSvg = document.querySelector('.logo-bg svg');
-    const body = document.body;
+  const colorButtons = document.querySelectorAll('.color-button');
+  const logoSvg = document.querySelector('.logo-bg svg');
+  const body = document.body;
 
-    // 배경 색상 및 로고 색상 변경 함수
-    function changeBackgroundColor(color, logoColor) {
-      body.style.backgroundColor = color;
-      logoSvg.style.color = logoColor;
-    }
+  // 배경 및 로고 색상 정의
+  const colors = [
+    { background: '#ffffff', logo: '#6C6500' },
+    { background: '#b3b3b3', logo: '#222222' },
+    { background: '#f5cc00', logo: '#ffffff' },
+    { background: '#f56d12', logo: '#f5cc00' }
+  ];
 
-    // 배경 색상 변경 (주기적으로)
-    const colors = [
-      { background: '#ffffff', logo: '#6C6500' },
-      { background: '#b3b3b3', logo: '#222222' },
-      { background: '#f5cc00', logo: '#ffffff' },
-      { background: '#f56d12', logo: '#f5cc00' }
-    ];
+  let currentColorIndex = 0;
+  let intervalId;
 
-    let currentColorIndex = 0;
+  // 배경 및 로고 색상 변경 함수
+  function changeBackgroundColor(color, logoColor) {
+    body.style.backgroundColor = color;
+    logoSvg.style.color = logoColor;
+  }
 
-    setInterval(() => {
-      changeBackgroundColor(colors[currentColorIndex].background, colors[currentColorIndex].logo);
+  // 자동 변경 함수
+  function startColorCycle() {
+    intervalId = setInterval(() => {
+      const { background, logo } = colors[currentColorIndex];
+      changeBackgroundColor(background, logo);
       currentColorIndex = (currentColorIndex + 1) % colors.length;
-    }, 2500); // 2.5초마다 색상 변경
-  </script>
+    }, 2500);
+  }
+
+  // 버튼 클릭 시 수동 변경 + 흐름 유지
+  colorButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const selectedColor = button.getAttribute('data-color');
+      const selectedLogoColor = button.getAttribute('data-logocolor');
+
+      changeBackgroundColor(selectedColor, selectedLogoColor);
+
+      // 현재 색상이 colors 배열 안에 있다면 인덱스 맞춰주기
+      const foundIndex = colors.findIndex(
+        (c) => c.background === selectedColor && c.logo === selectedLogoColor
+      );
+
+      if (foundIndex !== -1) {
+        currentColorIndex = (foundIndex + 1) % colors.length; // 다음 색으로 이어지게 설정
+      }
+    });
+  });
+
+  // 자동 순환 시작
+  startColorCycle();
+</script>
+
 </body>
 </html>
