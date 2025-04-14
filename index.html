@@ -152,17 +152,6 @@
   const logoSvg = document.querySelector('.logo-bg svg');
   const body = document.body;
 
-  const modelViewer = document.getElementById('myModel');
-  
-  // 모델이 로드된 후 크기 조정
-  modelViewer.addEventListener('load', () => {
-    const model = modelViewer.model;
-    if (model) {
-      // scale 값을 변경
-      model.scale.set(3, 3, 3); // 원하는 크기로 설정
-    }
-  });
-
   let autoChangeTimer; // 타이머를 저장할 변수
   let currentColorIndex = 0; // 자동 변경 색상의 인덱스를 추적하는 변수
 
