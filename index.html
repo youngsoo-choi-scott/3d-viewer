@@ -149,54 +149,50 @@
   const colorButtons = document.querySelectorAll('.color-button');
   const logoSvg = document.querySelector('.logo-bg svg');
   const body = document.body;
-
-  // 배경 및 로고 색상 정의
+  
+  let autoChangeTimer; // 타이머를 저장할 변수
+  
+  // 배경 색상 및 로고 색상 변경 함수
+  function changeBackgroundColor(color, logoColor) {
+    body.style.backgroundColor = color;
+    logoSvg.style.color = logoColor;
+  }
+  
+  // 배경 색상 변경 (주기적으로)
   const colors = [
     { background: '#ffffff', logo: '#6C6500' },
     { background: '#b3b3b3', logo: '#222222' },
     { background: '#f5cc00', logo: '#ffffff' },
     { background: '#f56d12', logo: '#f5cc00' }
   ];
-
+  
   let currentColorIndex = 0;
-  let intervalId;
-
-  // 배경 및 로고 색상 변경 함수
-  function changeBackgroundColor(color, logoColor) {
-    body.style.backgroundColor = color;
-    logoSvg.style.color = logoColor;
-  }
-
-  // 자동 변경 함수
-  function startColorCycle() {
-    intervalId = setInterval(() => {
-      const { background, logo } = colors[currentColorIndex];
-      changeBackgroundColor(background, logo);
+  
+  // 자동 색상 변경 함수
+  function startAutoColorChange() {
+    autoChangeTimer = setInterval(() => {
+      changeBackgroundColor(colors[currentColorIndex].background, colors[currentColorIndex].logo);
       currentColorIndex = (currentColorIndex + 1) % colors.length;
-    }, 3000);
+    }, 3000); // 3초마다 색상 변경
   }
-
-  // 버튼 클릭 시 수동 변경 + 흐름 유지
-  colorButtons.forEach((button) => {
+  
+  // 버튼 클릭 시 색상 변경
+  colorButtons.forEach(button => {
     button.addEventListener('click', () => {
-      const selectedColor = button.getAttribute('data-color');
-      const selectedLogoColor = button.getAttribute('data-logocolor');
-
-      changeBackgroundColor(selectedColor, selectedLogoColor);
-
-      // 현재 색상이 colors 배열 안에 있다면 인덱스 맞춰주기
-      const foundIndex = colors.findIndex(
-        (c) => c.background === selectedColor && c.logo === selectedLogoColor
-      );
-
-      if (foundIndex !== -1) {
-        currentColorIndex = (foundIndex + 1) % colors.length; // 다음 색으로 이어지게 설정
-      }
+      const newColor = button.getAttribute('data-color');
+      const newLogoColor = button.getAttribute('data-logocolor');
+      
+      // 색상 변경
+      changeBackgroundColor(newColor, newLogoColor);
+  
+      // 자동 변경 타이머 리셋 및 재시작
+      clearInterval(autoChangeTimer); // 기존 타이머 초기화
+      startAutoColorChange(); // 새로운 타이머 시작
     });
   });
-
-  // 자동 순환 시작
-  startColorCycle();
+  
+  // 페이지 로드 시 자동 색상 변경 시작
+  startAutoColorChange();
 </script>
 
 </body>
