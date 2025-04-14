@@ -22,7 +22,7 @@
     }
 
     :root {
-      --logo-color: #111111; /* 초기 텍스트 색상 */
+      --logo-color: #111111;
     }
 
     model-viewer {
@@ -95,6 +95,7 @@
       width: 100%;
       height: auto;
       color: var(--logo-color);
+      transition: color 0.6s ease-in-out;
     }
   </style>
 </head>
@@ -111,8 +112,15 @@
     style="--poster-color: transparent;"
   ></model-viewer>
 
+  <div class="color-buttons">
+    <div class="color-button white" data-color="#ffffff" data-logocolor="#111111"></div>
+    <div class="color-button gray" data-color="#b3b3b3" data-logocolor="#222222"></div>
+    <div class="color-button yellow" data-color="#f5cc00" data-logocolor="#5d4d00"></div>
+    <div class="color-button orange" data-color="#f56d12" data-logocolor="#6c3c00"></div>
+  </div>
+
   <div class="logo-bg">
-    <!-- 임시 SVG: 실제 로고로 대체해주세요 -->
+    <!-- 로고 SVG 시작 -->
     <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448.97 124.72">
       <defs>
         <style>
@@ -135,79 +143,24 @@
         </g>
       </g>
   </svg>
-  </div>
-
-  <div class="color-buttons">
-    <div class="color-button white" onclick="setManualColor('#ffffff')"></div>
-    <div class="color-button gray" onclick="setManualColor('#b3b3b3')"></div>
-    <div class="color-button yellow" onclick="setManualColor('#f5cc00')"></div>
-    <div class="color-button orange" onclick="setManualColor('#f56d12')"></div>
+    <!-- 로고 SVG 끝 -->
   </div>
 
   <script>
-    const colors = ['#ffffff', '#b3b3b3', '#f5cc00', '#f56d12'];
-    let colorIndex = 0;
-    let autoChange = true;
-    let resumeTimeout;
+    const colorButtons = document.querySelectorAll('.color-button');
 
-    function changeBG(color) {
-      document.body.style.backgroundColor = color;
-      document.documentElement.style.setProperty('--logo-color', getContrastColor(color));
-    }
-
-    function setManualColor(color) {
-      changeBG(color);
-      const newIndex = colors.indexOf(color);
-      if (newIndex !== -1) {
-        colorIndex = (newIndex + 1) % colors.length;
-      }
-      pauseAutoChange();
-    }
-
-    function pauseAutoChange() {
-      autoChange = false;
-      clearTimeout(resumeTimeout);
-      resumeTimeout = setTimeout(() => {
-        autoChange = true;
-      }, 3000);
-    }
-
-    setInterval(() => {
-      if (autoChange) {
-        changeBG(colors[colorIndex]);
-        colorIndex = (colorIndex + 1) % colors.length;
-      }
-    }, 3000);
-
-    document.querySelectorAll('.color-button').forEach((button) => {
+    colorButtons.forEach(button => {
       button.addEventListener('click', () => {
-        const color = window.getComputedStyle(button).backgroundColor;
-        const hexColor = rgbToHex(color);
-        setManualColor(hexColor);
+        const bgColor = button.getAttribute('data-color');
+        const logoColor = button.getAttribute('data-logocolor');
+
+        // 배경색 변경
+        document.body.style.backgroundColor = bgColor;
+
+        // 로고 색상 변경
+        document.documentElement.style.setProperty('--logo-color', logoColor);
       });
     });
-
-    function rgbToHex(rgb) {
-      const result = rgb.match(/\d+/g);
-      if (!result) return '#ffffff';
-      return (
-        '#' +
-        result
-          .map((num) => {
-            const hex = parseInt(num).toString(16);
-            return hex.length === 1 ? '0' + hex : hex;
-          })
-          .join('')
-      );
-    }
-
-    function getContrastColor(hex) {
-      const r = parseInt(hex.substr(1, 2), 16);
-      const g = parseInt(hex.substr(3, 2), 16);
-      const b = parseInt(hex.substr(5, 2), 16);
-      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-      return brightness > 128 ? '#111111' : '#ffffff';
-    }
   </script>
 
 </body>
