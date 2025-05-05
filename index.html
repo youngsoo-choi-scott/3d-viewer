@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IHOLLEE 3D Viewer</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #f5f5ef;
+      transition: background-color 0.6s ease-in-out;
+      font-family: sans-serif;
+    }
+
+    :root {
+      --logo-color: #6C6500;
+    }
+
+    model-viewer {
+      width: 100vw;
+      height: 100vh;
+      transform: scale(1.5);
+      transform-origin: center center;
+      background-color: transparent;
+      opacity: 0;
+      transform: scale(0.98);
+      animation: fadeInZoom 1.2s ease-out forwards;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    @keyframes fadeInZoom {
+      0% {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .color-buttons {
+      position: absolute;
+      left: 65%;
+      top: 10.5%;
+      transform: translateX(10%);
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+    }
+
+    .color-button {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .color-button:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .white { background-color: #f5f5ef; }
+    .gray { background-color: #00FFD4; }
+    .yellow { background-color: #FFE500; }
+    .orange { background-color: #FF6600; }
+
+    .logo-bg {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      padding: 0 120px;
+      z-index: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .logo-bg svg {
+      width: 100%;
+      height: auto;
+      color: var(--logo-color);
+      transition: color 0.6s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+  <model-viewer
+    src="model.glb"
+    alt="IHOLLEE 3D Hanger"
+    camera-controls
+    camera-orbit="0deg 75deg 13m"
+    shadow-intensity="1"
+    auto-rotate
+    ar
+    environment-image="neutral"
+    exposure="1.2"
+    style="--poster-color: transparent;"
+  ></model-viewer>
+
+  <div class="color-buttons">
+    <div class="color-button white" data-color="#f5f5ef" data-logocolor="#6C6500"></div>
+    <div class="color-button gray" data-color="#00FFD4" data-logocolor="#6C6500"></div>
+    <div class="color-button yellow" data-color="#FFE500" data-logocolor="#6C6500"></div>
+    <div class="color-button orange" data-color="#FF6600" data-logocolor="#6C6500"></div>
+  </div>
+
+  <div class="logo-bg">
+    <!-- 로고 SVG 삽입 부분 -->
+    <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448.97 124.72">
+      <defs>
+        <style>
+          .cls-1 {
+            fill: currentColor;
+            stroke-width: 0px;
+          }
+        </style>
+      </defs>
+      <g id="_레이어_1" data-name="레이어 1">
+        <g>
+          <path class="cls-1" d="M164.62,34.93c-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9,44.9-20.1,44.9-44.9-20.1-44.9-44.9-44.9M164.62,114.75c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92,34.92,15.63,34.92,34.92-15.63,34.92-34.92,34.92"/>
+          <path class="cls-1" d="M4.99,0C2.23,0,0,2.24,0,5v14.97h9.98V5C9.98,2.24,7.74,0,4.99,0"/>
+          <path class="cls-1" d="M249.43,5c0-2.75-2.23-4.98-4.98-4.98s-4.98,2.23-4.98,4.98h0v109.75h0c0,2.75,2.23,4.98,4.98,4.98s4.98-2.23,4.98-4.98V5Z"/>
+          <path class="cls-1" d="M349.2,84.81v-4.99c0-1.69-.1-3.35-.28-4.99-2.48-22.45-21.51-39.91-44.61-39.91-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9c1.05,0,2.08-.05,3.11-.12h0c2.75,0,4.98-2.24,4.98-4.99s-2.23-5.01-4.98-5.01c-1.03.09-2.06.15-3.11.15h0c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92c17.59,0,32.1,13.02,34.52,29.93h-36.54s0,.01,0,.01c-2.75,0-4.98,2.23-4.98,4.98s2.23,4.98,4.98,4.98c0,0,0,0,0,0h0s46.91,0,46.91,0Z"/>
+          <path class="cls-1" d="M448.97,84.81v-4.99c0-1.69-.1-3.35-.28-4.99-2.48-22.45-21.51-39.91-44.61-39.91-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9c1.05,0,2.08-.05,3.11-.12h0c2.75,0,4.98-2.24,4.98-4.99s-2.23-5.01-4.98-5.01c-1.03.09-2.06.15-3.11.15h0c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92c17.59,0,32.1,13.02,34.52,29.93h-36.54s0,.01,0,.01c-2.75,0-4.98,2.23-4.98,4.98s2.23,4.98,4.98,4.98c0,0,0,0,0,0h0s46.91,0,46.91,0Z"/>
+          <path class="cls-1" d="M224.49.02c-2.75,0-4.98,2.23-4.98,4.98h-.01v109.75c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99V5c0-2.75-2.23-4.98-4.98-4.98"/>
+          <path class="cls-1" d="M0,24.95v89.79c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99V24.95H0Z"/>
+          <path class="cls-1" d="M109.75,79.83c0-24.8-20.1-44.9-44.9-44.9-14.11,0-26.69,6.51-34.92,16.69V5h0s0,0,0,0c0-2.76-2.23-4.99-4.99-4.99s-4.99,2.23-4.99,4.99c0,0,0,0,0,0h0v109.75h0s0,0,0,.01c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99c0,0,0-.01,0-.02v-34.92c0-19.29,15.63-34.92,34.92-34.92s34.92,15.63,34.92,34.92v34.92h0s0,.01,0,.02c0,2.75,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99c0,0,0-.01,0-.02h0v-34.92Z"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <script>
+  const colorButtons = document.querySelectorAll('.color-button');
+  const logoSvg = document.querySelector('.logo-bg svg');
+  const body = document.body;
+
+  let autoChangeTimer; // 타이머를 저장할 변수
+  let currentColorIndex = 0; // 자동 변경 색상의 인덱스를 추적하는 변수
+
+  // 배경 색상 및 로고 색상 변경 함수
+  function changeBackgroundColor(color, logoColor) {
+    body.style.backgroundColor = color;
+    logoSvg.style.color = logoColor;
+  }
+
+  // 배경 색상 변경 (주기적으로)
+  const colors = [
+    { background: '#f5f5ef', logo: '#6C6500' },
+    { background: '#00FFD4', logo: '#6C6500' },
+    { background: '#FFE500', logo: '#6C6500' },
+    { background: '#FF6600', logo: '#6C6500' }
+  ];
+
+  // 자동 색상 변경 함수
+  function startAutoColorChange() {
+    autoChangeTimer = setInterval(() => {
+      // 현재 색상 인덱스에 맞게 색상 변경
+      changeBackgroundColor(colors[currentColorIndex].background, colors[currentColorIndex].logo);
+      
+      // 인덱스 순차적으로 증가
+      currentColorIndex = (currentColorIndex + 1) % colors.length;
+    }, 3000); // 3초마다 색상 변경
+  }
+
+  // 버튼 클릭 시 색상 변경
+  colorButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+      // 클릭한 버튼에 맞는 색상 인덱스 찾기
+      const color = event.target.dataset.color;
+      const logoColor = event.target.dataset.logocolor;
+
+      // 색상 변경
+      changeBackgroundColor(color, logoColor);
+
+      // 버튼 클릭 후, 자동 변경을 다시 시작하며 색상 인덱스를 해당 버튼 클릭 색상으로 설정
+      const clickedColorIndex = colors.findIndex(c => c.background === color);
+      currentColorIndex = clickedColorIndex; // 클릭한 버튼의 색상 인덱스로 설정
+
+      // 자동 변경 타이머 리셋 및 재시작
+      clearInterval(autoChangeTimer); // 기존 타이머 초기화
+      startAutoColorChange(); // 새로운 타이머 시작
+    });
+  });
+
+  // 페이지 로드 시 자동 색상 변경 시작
+  startAutoColorChange();
+</script>
+
+</body>
+</html>
