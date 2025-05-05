@@ -16,10 +16,10 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: linear-gradient(-45deg, #00ffd4, #ffe500, #ff6600, #6C6500);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
       font-family: sans-serif;
+      background: linear-gradient(270deg, #ff4e50, #f9d423, #24c6dc, #514a9d, #ff4e50);
+      background-size: 1000% 1000%;
+      animation: gradientMove 6s ease infinite;
     }
 
     :root {
@@ -41,17 +41,11 @@
       z-index: 1;
     }
 
-    @keyframes gradientBG {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-}
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
     @keyframes fadeInZoom {
       0% {
