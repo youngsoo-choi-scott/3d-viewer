@@ -17,9 +17,9 @@
       height: 100%;
       overflow: hidden;
       font-family: sans-serif;
-      background: linear-gradient(270deg, #ff4e50, #f9d423, #24c6dc, #514a9d, #ff4e50);
-      background-size: 1000% 1000%;
-      animation: gradientMove 6s ease infinite;
+      background: radial-gradient(circle at center, #ff9a9e, #fad0c4, #fad0c4, #ffdde1);
+      background-size: 200% 200%;
+      animation: gradientWaves 10s ease infinite;
     }
 
     :root {
@@ -41,10 +41,10 @@
       z-index: 1;
     }
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @keyframes gradientWaves {
+      0% { background-position: 50% 50%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 50% 50%; }
     }
 
     @keyframes fadeInZoom {
