@@ -17,9 +17,10 @@
       height: 100%;
       overflow: hidden;
       font-family: sans-serif;
-      background: radial-gradient(circle at center, #6c6500, #b18433, #f6a368, #ffc5a7);
-      background-size: 400% 400%;
-      animation: gradientWaves 10s ease infinite;
+      background: linear-gradient(120deg, #ff4e50, #f9d423, #24c6dc);
+      background-size: 600% 600%;
+      animation: movingGradient 8s ease-in-out infinite;
+      filter: hue-rotate(0deg);
     }
 
     model-viewer {
@@ -37,10 +38,10 @@
       z-index: 1;
     }
 
-    @keyframes gradientWaves {
-      0% { background-position: 50% 50%; }
-      50% { background-position: 100% 100%; }
-      100% { background-position: 50% 50%; }
+    @keyframes movingGradient {
+      0% { background-position: 0% 50%; filter: hue-rotate(0deg); }
+      50% { background-position: 100% 50%; filter: hue-rotate(180deg); }
+      100% { background-position: 0% 50%; filter: hue-rotate(360deg); }
     }
 
     @keyframes fadeInZoom {
