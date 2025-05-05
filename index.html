@@ -51,30 +51,6 @@
       }
     }
 
-    .color-buttons {
-      position: absolute;
-      left: 65%;
-      top: 10.5%;
-      transform: translateX(10%);
-      display: flex;
-      gap: 12px;
-      z-index: 10;
-    }
-
-    .color-button {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .color-button:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
-    }
-
     .white { background-color: #f5f5ef; }
     .gray { background-color: #00FFD4; }
     .yellow { background-color: #FFE500; }
@@ -114,13 +90,6 @@
     exposure="1.2"
     style="--poster-color: transparent;"
   ></model-viewer>
-
-  <div class="color-buttons">
-    <div class="color-button white" data-color="#f5f5ef" data-logocolor="#6C6500"></div>
-    <div class="color-button gray" data-color="#00FFD4" data-logocolor="#6C6500"></div>
-    <div class="color-button yellow" data-color="#FFE500" data-logocolor="#6C6500"></div>
-    <div class="color-button orange" data-color="#FF6600" data-logocolor="#6C6500"></div>
-  </div>
 
   <div class="logo-bg">
     <!-- 로고 SVG 삽입 부분 -->
@@ -180,26 +149,6 @@
       currentColorIndex = (currentColorIndex + 1) % colors.length;
     }, 3000); // 3초마다 색상 변경
   }
-
-  // 버튼 클릭 시 색상 변경
-  colorButtons.forEach(button => {
-    button.addEventListener('click', (event) => {
-      // 클릭한 버튼에 맞는 색상 인덱스 찾기
-      const color = event.target.dataset.color;
-      const logoColor = event.target.dataset.logocolor;
-
-      // 색상 변경
-      changeBackgroundColor(color, logoColor);
-
-      // 버튼 클릭 후, 자동 변경을 다시 시작하며 색상 인덱스를 해당 버튼 클릭 색상으로 설정
-      const clickedColorIndex = colors.findIndex(c => c.background === color);
-      currentColorIndex = clickedColorIndex; // 클릭한 버튼의 색상 인덱스로 설정
-
-      // 자동 변경 타이머 리셋 및 재시작
-      clearInterval(autoChangeTimer); // 기존 타이머 초기화
-      startAutoColorChange(); // 새로운 타이머 시작
-    });
-  });
 
   // 페이지 로드 시 자동 색상 변경 시작
   startAutoColorChange();
