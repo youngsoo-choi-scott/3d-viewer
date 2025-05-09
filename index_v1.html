@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -16,22 +16,65 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      font-family: sans-serif;
+      font-family: 'Pretendard', sans-serif;
+      letter-spacing: -0.025em;
+      color: #333332;
       background: #ffffff;
+      position: relative;
     }
 
+    /* 텍스트 배경 */
+    .background-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 0;
+      display: flex;
+    }
+
+    .left-text,
+    .right-text {
+      width: 50%;
+      padding: 60px;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .left-text {
+      font-size: 28px;
+      justify-content: flex-end;
+      text-align: right;
+    }
+
+    .right-text {
+      font-size: 16px;
+      justify-content: flex-start;
+      text-align: left;
+      position: relative;
+    }
+
+    .divider {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      border-right: 1px solid #333332;
+    }
+
+    /* model-viewer 스타일 */
     model-viewer {
       width: 100vw;
       height: 100vh;
-      transform: scale(1.5);
-      transform-origin: center center;
       background-color: transparent;
-      opacity: 0;
-      animation: fadeInZoom 1.2s ease-out forwards;
       position: absolute;
       top: 0;
       left: 0;
       z-index: 1;
+      opacity: 0;
+      animation: fadeInZoom 1.2s ease-out forwards;
     }
 
     @keyframes fadeInZoom {
@@ -48,22 +91,29 @@
 </head>
 <body>
 
+  <!-- 텍스트 배경 -->
+  <div class="background-text">
+    <div class="left-text">
+      타이틀 텍스트입니다.
+    </div>
+    <div class="right-text">
+      <div class="divider"></div>
+      설명 텍스트가 여기에 들어갑니다. 자유롭게 내용을 채워보세요.
+    </div>
+  </div>
+
+  <!-- 3D 뷰어 -->
   <model-viewer
     src="model_silver.glb"
     alt="IHOLLEE 3D Hanger"
     camera-controls
     camera-orbit="305deg 110deg 1m"
+    field-of-view="25deg"
     shadow-intensity="0"
-    ar
     environment-image="neutral"
     exposure="2"
     style="--poster-color: transparent;"
-    field-of-view="25deg"
   ></model-viewer>
-
-  <script>
-  const body = document.body;
-  </script>
 
 </body>
 </html>
