@@ -19,7 +19,9 @@
       font-family: 'Pretendard', sans-serif;
       letter-spacing: -0.025em;
       color: #333332;
-      background: #f9f9f9;
+      background: radial-gradient(circle at center, #B4AF77, #D9D4B2, #EBE7D0, #FDF9EE);
+      background-size: 200% 200%;
+      animation: gradientWaves 10s ease infinite;
       position: relative;
     }
 
@@ -118,7 +120,7 @@
 
   <!-- 3D 뷰어 -->
   <model-viewer
-    src="model_silver.glb"
+    src="model.glb"
     alt="IHOLLEE 3D Hanger"
     camera-controls
     camera-orbit="305deg 110deg 1m"
