@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IHOLLEE 3D Viewer</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'DM Sans', 'Pretendard', sans-serif;
+      letter-spacing: -0.03em;
+      color: #333332;
+      background: radial-gradient(circle at center, #B4AF77, #D9D4B2, #EBE7D0, #FDF9EE);
+      background-size: 200% 200%;
+      animation: gradientWaves 10s ease infinite;
+      position: relative;
+    }
+
+    /* 텍스트 배경 */
+    .background-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 0;
+      display: flex;
+      opacity: 0;
+      animation: fadeInZoom 0.8s ease-out forwards;
+    }
+
+    .left-text,
+    .right-text {
+      display: flex;
+      box-sizing: border-box;
+      color: #6C6500;
+    }
+
+    .left-text {
+      width: 66.66%;
+      padding: 72px 0 18px 40px;
+      font-size: 15px;
+      justify-content: flex-start;
+      text-align: left;
+      align-items: baseline;
+      flex-direction: column;
+    }
+
+    .right-text {
+      width: 33.33%;
+      padding: 72px 40px 40px 0;
+      font-size: 15px;
+      justify-content: flex-start;
+      text-align: left;
+      position: relative;
+      line-height: 150%;
+      word-break: keep-all;
+      align-items: end;
+    }
+
+    .right-text h5 {
+      font-size: 52px;
+      padding-bottom: 18px;
+      font-weight: 500;
+      line-height: 100%;
+    }
+
+    .divider {
+      position: absolute;
+      left: 0;
+      top: 5%;
+      height: 90%;
+      border-right: 0px solid #cccccc;
+    }
+
+    /* model-viewer 스타일 */
+    model-viewer {
+      width: 100vw;
+      height: 100vh;
+      background-color: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeInZoom 1.2s ease-out forwards;
+    }
+
+     @keyframes gradientWaves {
+        0% { background-position: 50% 50%; }
+        50% { background-position: 100% 100%; }
+        100% { background-position: 50% 50%; }
+      }
+    
+    @keyframes fadeInZoom {
+      0% {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* 로고 */
+    .logo {
+      width: 200px;
+      padding-top: 18px;
+      color: #6C6500;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- 텍스트 배경 -->
+  <div class="background-text">
+    <div class="left-text">
+      <div class="logo-wrapper">
+        <svg class="logo" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448.97 124.72">
+          <defs>
+            <style>
+              .cls-1 {
+                fill: currentColor;
+                stroke-width: 0px;
+              }
+            </style>
+          </defs>
+          <g id="_레이어_1" data-name="레이어 1">
+            <g>
+              <path class="cls-1" d="M164.62,34.93c-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9,44.9-20.1,44.9-44.9-20.1-44.9-44.9-44.9M164.62,114.75c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92,34.92,15.63,34.92,34.92-15.63,34.92-34.92,34.92"/>
+              <path class="cls-1" d="M4.99,0C2.23,0,0,2.24,0,5v14.97h9.98V5C9.98,2.24,7.74,0,4.99,0"/>
+              <path class="cls-1" d="M249.43,5c0-2.75-2.23-4.98-4.98-4.98s-4.98,2.23-4.98,4.98h0v109.75h0c0,2.75,2.23,4.98,4.98,4.98s4.98-2.23,4.98-4.98V5Z"/>
+              <path class="cls-1" d="M349.2,84.81v-4.99c0-1.69-.1-3.35-.28-4.99-2.48-22.45-21.51-39.91-44.61-39.91-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9c1.05,0,2.08-.05,3.11-.12h0c2.75,0,4.98-2.24,4.98-4.99s-2.23-5.01-4.98-5.01c-1.03.09-2.06.15-3.11.15h0c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92c17.59,0,32.1,13.02,34.52,29.93h-36.54s0,.01,0,.01c-2.75,0-4.98,2.23-4.98,4.98s2.23,4.98,4.98,4.98c0,0,0,0,0,0h0s46.91,0,46.91,0Z"/>
+              <path class="cls-1" d="M448.97,84.81v-4.99c0-1.69-.1-3.35-.28-4.99-2.48-22.45-21.51-39.91-44.61-39.91-24.8,0-44.9,20.1-44.9,44.9s20.1,44.9,44.9,44.9c1.05,0,2.08-.05,3.11-.12h0c2.75,0,4.98-2.24,4.98-4.99s-2.23-5.01-4.98-5.01c-1.03.09-2.06.15-3.11.15h0c-19.29,0-34.92-15.63-34.92-34.92s15.63-34.92,34.92-34.92c17.59,0,32.1,13.02,34.52,29.93h-36.54s0,.01,0,.01c-2.75,0-4.98,2.23-4.98,4.98s2.23,4.98,4.98,4.98c0,0,0,0,0,0h0s46.91,0,46.91,0Z"/>
+              <path class="cls-1" d="M224.49.02c-2.75,0-4.98,2.23-4.98,4.98h-.01v109.75c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99V5c0-2.75-2.23-4.98-4.98-4.98"/>
+              <path class="cls-1" d="M0,24.95v89.79c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99V24.95H0Z"/>
+              <path class="cls-1" d="M109.75,79.83c0-24.8-20.1-44.9-44.9-44.9-14.11,0-26.69,6.51-34.92,16.69V5h0s0,0,0,0c0-2.76-2.23-4.99-4.99-4.99s-4.99,2.23-4.99,4.99c0,0,0,0,0,0h0v109.75h0s0,0,0,.01c0,2.76,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99c0,0,0-.01,0-.02v-34.92c0-19.29,15.63-34.92,34.92-34.92s34.92,15.63,34.92,34.92v34.92h0s0,.01,0,.02c0,2.75,2.23,4.99,4.99,4.99s4.99-2.23,4.99-4.99c0,0,0-.01,0-.02h0v-34.92Z"/>
+            </g>
+          </g>
+        </svg>
+      </div><!-- logo-wrapper -->
+      <div style="line-height: 150%; padding-top: 24px;">
+        <p>Air Circulation</p>
+        <p>Non-slip Grip</p>
+        <p>Stackable Design</p>
+        <p>Soft Curves</p>
+      </div>
+    </div>
+    <div class="right-text">
+      <div class="divider"></div>
+      <div style="padding-top: 60px;">
+        <h5>Daily Comfort <br>Hanger</h5>
+        디자이너의 철학과 감각을 더했습니다. 단순한 도구가 아닌, 감각적인 오브제. <br>
+        형태는 우아하게, 기능은 탁월하게, 실용성과 조형미를 균형 있게 담아냅니다. <br> 
+        일상을 더 아름답게, 아이홀리.
+      </div>
+    </div>
+  </div>
+
+  <!-- 3D 뷰어 -->
+  <model-viewer
+    src="model.glb"
+    alt="IHOLLEE 3D Hanger"
+    camera-controls
+    camera-orbit="305deg 110deg 1m"
+    field-of-view="25deg"
+    shadow-intensity="0"
+    environment-image="neutral"
+    exposure="2"
+    style="--poster-color: transparent;"
+  ></model-viewer>
+
+</body>
+</html>
