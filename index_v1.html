@@ -41,7 +41,6 @@
     .left-text,
     .right-text {
       display: flex;
-      align-items: baseline;
       box-sizing: border-box;
       color: #6C6500;
     }
@@ -53,23 +52,25 @@
       justify-content: flex-start;
       text-align: left;
       align-items: baseline;
+      flex-direction: column;
     }
 
     .right-text {
       width: 33.33%;
-      padding: 72px 40px 0 0;
-      font-size: 18px;
+      padding: 72px 40px 40px 0;
+      font-size: 15px;
       justify-content: flex-start;
       text-align: left;
       position: relative;
       line-height: 150%;
       word-break: keep-all;
+      align-items: end;
     }
 
     .right-text h5 {
-      font-size: 15px;
-      padding-bottom: 8px;
-      font-weight: 600;
+      font-size: 36px;
+      padding-bottom: 18px;
+      font-weight: 500;
     }
 
     .divider {
@@ -112,7 +113,7 @@
 
     /* 로고 */
     .logo {
-      width: 320px;
+      width: 240px;
       padding-top: 18px;
       color: #6C6500;
     }
@@ -149,7 +150,10 @@
         </svg>
       </div><!-- logo-wrapper -->
       <div>
-        Air Circulation, Non-slip Grip, Stackable Design, Soft Curves
+        <p>Air Circulation</p>
+        <p>Non-slip Grip</p>
+        <p>Stackable Design</p>
+        <p>Soft Curves</p>
       </div>
     </div>
     <div class="right-text">
