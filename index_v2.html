@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>IHOLLEE 3D Viewer</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     * {
@@ -16,7 +18,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      font-family: 'Pretendard', sans-serif;
+      font-family: 'DM Sans', 'Pretendard', sans-serif;
       letter-spacing: -0.025em;
       color: #333332;
       background: #f4f4f4;
@@ -43,22 +45,24 @@
       align-items: baseline;
       box-sizing: border-box;
       color: #cccccc;
+      letter-spacing: -1.5px;
     }
 
     .left-text {
       width: 65%;
-      font-size: 52px;
+      font-size: 40px;
       justify-content: flex-start;
       text-align: left;
     }
 
     .right-text {
       width: 35%;
-      font-size: 20px;
+      font-size: 40px;
       justify-content: flex-start;
       text-align: left;
       position: relative;
-      line-height: 170%;
+      line-height: 110%;
+      list-style: none;
     }
 
     .divider {
